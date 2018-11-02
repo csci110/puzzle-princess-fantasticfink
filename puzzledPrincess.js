@@ -1,3 +1,5 @@
+//Start at Computing the baord row and column
+
 import { game, Sprite } from "./sgc/sgc.js";
 game.setBackground("floor.png");
 
@@ -6,19 +8,15 @@ class Marker extends Sprite {
         super();
         this.board = board;
         this.name = name;
-        //Possible error
-        this.image = image;
-        this.x = 150;
-        this.y = 275;
+        this.setImage(image);
+        this.x = this.startX = 150;
+        this.y = this.startY = 275;
     }
 }
 
 class PrincessMarker extends Marker {
     constructor(board) {
-        super();
-        this.board = board;
-        this.setImage("annFace.png");
-        this.name = "Princess Ann";
+        super(board, "annFace.png", "Princess Ann");
         this.dragging = false;
     }
 
@@ -36,12 +34,14 @@ class PrincessMarker extends Marker {
             this.y = game.getMouseX() - this.height / 2;
         }
     }
+
 }
 
 class StrangerMarker extends Marker {}
 
 class TicTacToe extends Sprite {
     constructor() {
+        super();
         this.name = "Board";
         this.setImage("board.png");
         this.x = 300;
@@ -51,11 +51,8 @@ class TicTacToe extends Sprite {
         this.activeMarker; // variable exists, but value is undefined
     }
 
-    takeTurns() {
-        this.activeMarker = new PrincessMarker(this);
-    }
-
 }
+
 
 let theBoard = new TicTacToe();
 theBoard.takeTurns();
