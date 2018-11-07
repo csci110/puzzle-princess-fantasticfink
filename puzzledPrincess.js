@@ -1,4 +1,4 @@
-//Start at Computing the baord row and column
+//Centering the marker
 
 import { game, Sprite } from "./sgc/sgc.js";
 game.setBackground("floor.png");
@@ -11,6 +11,11 @@ class Marker extends Sprite {
         this.setImage(image);
         this.x = this.startX = 150;
         this.y = this.startY = 275;
+    }
+
+    playInSquare(row, col) {
+        row = this.x / 3;
+        col = this.y / 3;
     }
 }
 
@@ -26,6 +31,20 @@ class PrincessMarker extends Marker {
 
     handleMouseLeftButtonUp() {
         this.dragging = false;
+        let row = Math.floor((this.x - game.x) / 150);
+        //window.alert("The row number is " + row);
+        let col = Math.floor((this.y - game.y) / 150);
+        //window.alert("The row number is " + col);
+
+        if (row >= game.size && col >= game.size) {
+            this.x = this.startX;
+            this.y = this.startY;
+            return;
+        }
+
+        this.playInSquare(row, col);
+
+        takeTurns();
     }
 
     handleGameLoop() {
@@ -52,7 +71,6 @@ class TicTacToe extends Sprite {
     }
 
 }
-
 
 let theBoard = new TicTacToe();
 theBoard.takeTurns();
