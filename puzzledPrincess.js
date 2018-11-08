@@ -1,4 +1,4 @@
-//Centering the marker
+
 
 import { game, Sprite } from "./sgc/sgc.js";
 game.setBackground("floor.png");
@@ -13,6 +13,7 @@ class Marker extends Sprite {
         this.y = this.startY = 275;
     }
 
+// Problem area
     playInSquare(row, col) {
         row = this.x / 3;
         col = this.y / 3;
@@ -31,12 +32,14 @@ class PrincessMarker extends Marker {
 
     handleMouseLeftButtonUp() {
         this.dragging = false;
+        
         let row = Math.floor((this.x - game.x) / 150);
         //window.alert("The row number is " + row);
         let col = Math.floor((this.y - game.y) / 150);
         //window.alert("The row number is " + col);
 
-        if (row >= game.size && col >= game.size) {
+//Problem area
+        if (row > game.size || col > game.size) {
             this.x = this.startX;
             this.y = this.startY;
             return;
@@ -44,7 +47,8 @@ class PrincessMarker extends Marker {
 
         this.playInSquare(row, col);
 
-        takeTurns();
+//problem?
+        this.takeTurns();
     }
 
     handleGameLoop() {
@@ -68,6 +72,10 @@ class TicTacToe extends Sprite {
         this.SquareSize = 150;
         this.size = 3;
         this.activeMarker; // variable exists, but value is undefined
+    }
+    
+    takeTurns(){
+        this.activeMarker = new PrincessMarker(this);
     }
 
 }
