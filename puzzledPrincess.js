@@ -13,10 +13,10 @@ class Marker extends Sprite {
         this.y = this.startY = 275;
     }
 
-// Problem area
+// Centering
     playInSquare(row, col) {
-        row = this.x / 3;
-        col = this.y / 3;
+        this.x = 75;
+        this.y = 75;
     }
 }
 
@@ -33,13 +33,13 @@ class PrincessMarker extends Marker {
     handleMouseLeftButtonUp() {
         this.dragging = false;
         
-        let row = Math.floor((this.x - game.x) / 150);
-        //window.alert("The row number is " + row);
-        let col = Math.floor((this.y - game.y) / 150);
-        //window.alert("The row number is " + col);
+        let row = Math.floor((this.x - this.board.x) / 150);
+        // window.alert("The row number is " + row);
+        let col = Math.floor((this.y - this.board.y) / 150);
+        // window.alert("The col number is " + col);
 
 //Problem area
-        if (row > game.size || col > game.size) {
+        if (row >= this.board.size || col >= this.board.size) {
             this.x = this.startX;
             this.y = this.startY;
             return;
@@ -48,13 +48,13 @@ class PrincessMarker extends Marker {
         this.playInSquare(row, col);
 
 //problem?
-        this.takeTurns();
+        // this.takeTurns();
     }
 
     handleGameLoop() {
-        if (this.dragging === true) {
+        if (this.dragging) {
             this.x = game.getMouseX() - this.width / 2;
-            this.y = game.getMouseX() - this.height / 2;
+            this.y = game.getMouseY() - this.height / 2;
         }
     }
 
