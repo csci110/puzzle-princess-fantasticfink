@@ -1,4 +1,4 @@
-
+//Updating the board array
 
 import { game, Sprite } from "./sgc/sgc.js";
 game.setBackground("floor.png");
@@ -8,15 +8,18 @@ class Marker extends Sprite {
         super();
         this.board = board;
         this.name = name;
+        this.squareSymbol = this.name.substring(0, 1);
         this.setImage(image);
         this.x = this.startX = 150;
         this.y = this.startY = 275;
     }
 
-// Centering
+    // Centering
     playInSquare(row, col) {
-        this.x = 75;
-        this.y = 75;
+        this.x = this.board.x(row);
+        this.y = this.board.y(col);
+        
+        this.squareSymbol = this.dataModel[row][col];
     }
 }
 
@@ -32,13 +35,12 @@ class PrincessMarker extends Marker {
 
     handleMouseLeftButtonUp() {
         this.dragging = false;
-        
+
         let row = Math.floor((this.x - this.board.x) / 150);
         // window.alert("The row number is " + row);
         let col = Math.floor((this.y - this.board.y) / 150);
         // window.alert("The col number is " + col);
 
-//Problem area
         if (row >= this.board.size || col >= this.board.size) {
             this.x = this.startX;
             this.y = this.startY;
@@ -47,7 +49,7 @@ class PrincessMarker extends Marker {
 
         this.playInSquare(row, col);
 
-//problem?
+        //problem?
         // this.takeTurns();
     }
 
@@ -72,10 +74,32 @@ class TicTacToe extends Sprite {
         this.SquareSize = 150;
         this.size = 3;
         this.activeMarker; // variable exists, but value is undefined
+
+        this.dataModel = [];
+        for (let row = 0; row < this.size; row = row + 1) {
+            this.dataModel[row] = [];
+            for (let col = 0; col < this.boardSize; col = col + 1) {
+                this.dataModel[row][col] = this.emptySquareSymbol;
+            }
+        }
     }
-    
-    takeTurns(){
+
+    takeTurns() {
         this.activeMarker = new PrincessMarker(this);
+    }
+
+    emptySquareSymbol = "-";
+
+// this.board.size?
+    debugBoard() {
+        let boardString = '\n';
+        for (let row = 0; row < this.size; row = row + 1) {
+            for (let col = 0; col < this.size; col = col + 1) {
+                boardString = boardString + this.dataModel[row][col] + ' ';
+            }
+            boardString = boardString + '\n';
+        }
+        console.log('The current state of the board is ' + boardString);
     }
 
 }
