@@ -36,9 +36,9 @@ class PrincessMarker extends Marker {
     handleMouseLeftButtonUp() {
         this.dragging = false;
 
-        let row = Math.floor((this.x - this.board.x) / 150);
+        let row = Math.floor((this.x - this.board.x) / this.board.squareSize);
         // window.alert("The row number is " + row);
-        let col = Math.floor((this.y - this.board.y) / 150);
+        let col = Math.floor((this.y - this.board.y) / this.board.squareSize);
         // window.alert("The col number is " + col);
 
         if (row >= this.board.size || col >= this.board.size) {
@@ -49,8 +49,8 @@ class PrincessMarker extends Marker {
 
         this.playInSquare(row, col);
 
-        //problem?
-        // this.takeTurns();
+        
+        this.takeTurns();
     }
 
     handleGameLoop() {
