@@ -16,10 +16,11 @@ class Marker extends Sprite {
 
     // Centering
     playInSquare(row, col) {
-        this.x = this.board.x(row);
-        this.y = this.board.y(col);
-        
+        this.x = this.board.x + row * this.board.squareSize + this.board.squareSize / 2 - this.width / 2;
+        this.y = this.board.y + col * this.board.squareSize + this.board.squareSize / 2 - this.height / 2;
         this.squareSymbol = this.dataModel[row][col];
+        this.board.debugBoard();
+        this.inBoard = true;
     }
 }
 
@@ -88,7 +89,7 @@ class TicTacToe extends Sprite {
         this.activeMarker = new PrincessMarker(this);
     }
 
-    emptySquareSymbol = "-";
+    //this.emptySquareSymbol === "-";
 
 // this.board.size?
     debugBoard() {
