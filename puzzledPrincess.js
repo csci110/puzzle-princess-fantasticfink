@@ -1,4 +1,4 @@
-//Locking markers on the board
+// Part 3
 
 import { game, Sprite } from "./sgc/sgc.js";
 game.setBackground("floor.png");
