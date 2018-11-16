@@ -89,6 +89,7 @@ class TicTacToe extends Sprite {
         this.SquareSize = 150;
         this.size = 3;
         this.activeMarker; // variable exists, but value is undefined
+        this.emptySquareSymbol = "-";
 
         // this.board.size?
         this.dataModel = [];
@@ -103,8 +104,6 @@ class TicTacToe extends Sprite {
     takeTurns() {
         this.activeMarker = new PrincessMarker(this);
     }
-
-    emptySquareSymbol = "-";
 
     // this.board.size?
     debugBoard() {
