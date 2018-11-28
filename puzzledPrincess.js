@@ -18,11 +18,11 @@ class Marker extends Sprite {
     playInSquare(row, col) {
 
         // Centering
-        this.x = this.board.x + col * this.board.squareSize + this.board.squareSize / 2 - this.width / 2;
-        this.y = this.board.y + row * this.board.squareSize + this.board.squareSize / 2 - this.height / 2;
+        this.x = this.board.x + col * this.board.SquareSize + this.board.SquareSize / 2 - this.width / 2;
+        this.y = this.board.y + row * this.board.SquareSize + this.board.SquareSize / 2 - this.height / 2;
 
         // Updating Board Array
-        this.squareSymbol = this.dataModel[row][col];
+        this.squareSymbol = new TicTacToe().dataModel[row][col];
         this.board.debugBoard();
 
         this.inBoard = true;
@@ -51,12 +51,17 @@ class PrincessMarker extends Marker {
 
         this.dragging = false;
 
-        let row = Math.floor((this.x - this.board.x) / this.board.squareSize);
-        // window.alert("The row number is " + row);
-        let col = Math.floor((this.y - this.board.y) / this.board.squareSize);
-        // window.alert("The col number is " + col);
+        let col = Math.floor((this.x - this.board.x) / this.board.SquareSize);
 
-        if (row < 0 || row >= this.board.size || col < 0 || col >= this.board.size || this.board.dataModel[row][col] !== this.board.emptySquareSymbol) {
+        let row = Math.floor((this.y - this.board.y) / this.board.SquareSize);
+        console.log(this.x, this.y, this.board.SquareSize);
+        //window.alert(col);
+        //window.alert(row);
+
+        if (row < 0 || row >= this.board.size || col < 0 ||
+            col >= this.board.size ||
+            this.board.dataModel[row][col] !==
+            this.board.emptySquareSymbol) {
             this.x = this.startX;
             this.y = this.startY;
             return;
@@ -65,7 +70,7 @@ class PrincessMarker extends Marker {
         this.playInSquare(row, col);
 
 
-        this.takeTurns();
+        this.takeTurns;
     }
 
     handleGameLoop() {
@@ -95,7 +100,7 @@ class TicTacToe extends Sprite {
         this.dataModel = [];
         for (let row = 0; row < this.size; row = row + 1) {
             this.dataModel[row] = [];
-            for (let col = 0; col < this.boardSize; col = col + 1) {
+            for (let col = 0; col < this.size; col = col + 1) {
                 this.dataModel[row][col] = this.emptySquareSymbol;
             }
         }
@@ -107,6 +112,7 @@ class TicTacToe extends Sprite {
 
     // this.board.size?
     debugBoard() {
+        let moveCount = 0;
         let boardString = '\n';
         for (let row = 0; row < this.size; row = row + 1) {
             for (let col = 0; col < this.size; col = col + 1) {
@@ -121,7 +127,7 @@ class TicTacToe extends Sprite {
         // Adding a turn counter
         console.log('The data model after ' + moveCount + ' move(s):' + boardString);
 
-        let moveCount = 0;
+        //let moveCount = 0;
     }
 
 }
