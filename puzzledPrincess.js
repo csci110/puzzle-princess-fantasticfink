@@ -1,4 +1,4 @@
-// Part 3
+// Adding a turn counter
 
 import { game, Sprite } from "./sgc/sgc.js";
 game.setBackground("floor.png");
@@ -22,7 +22,7 @@ class Marker extends Sprite {
         this.y = this.board.y + row * this.board.SquareSize + this.board.SquareSize / 2 - this.height / 2;
 
         // Updating Board Array
-        this.squareSymbol = new TicTacToe().dataModel[row][col];
+        this.squareSymbol = this.name.substring(0,1);
         this.board.debugBoard();
 
         this.inBoard = true;
@@ -54,7 +54,7 @@ class PrincessMarker extends Marker {
         let col = Math.floor((this.x - this.board.x) / this.board.SquareSize);
 
         let row = Math.floor((this.y - this.board.y) / this.board.SquareSize);
-        console.log(this.x, this.y, this.board.SquareSize);
+        //console.log(this.x, this.y, this.board.SquareSize);
         //window.alert(col);
         //window.alert(row);
 
@@ -70,7 +70,7 @@ class PrincessMarker extends Marker {
         this.playInSquare(row, col);
 
 
-        this.takeTurns;
+        this.board.takeTurns();
     }
 
     handleGameLoop() {
@@ -110,14 +110,14 @@ class TicTacToe extends Sprite {
         this.activeMarker = new PrincessMarker(this);
     }
 
-    // this.board.size?
+    // Start here on Friday
     debugBoard() {
         let moveCount = 0;
         let boardString = '\n';
         for (let row = 0; row < this.size; row = row + 1) {
             for (let col = 0; col < this.size; col = col + 1) {
                 boardString = boardString + this.dataModel[row][col] + ' ';
-                if (this.square != this.emptySquareSymbol) {
+                if (this.dataModel[row][col] != this.emptySquareSymbol) {
                     moveCount = moveCount + 1;
                 }
             }
