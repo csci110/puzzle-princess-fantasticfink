@@ -110,7 +110,6 @@ class TicTacToe extends Sprite {
         this.activeMarker = new PrincessMarker(this);
     }
 
-    // Start here on Friday
     debugBoard() {
         let moveCount = 0;
         let boardString = '\n';
@@ -126,8 +125,6 @@ class TicTacToe extends Sprite {
 
         // Adding a turn counter
         console.log('The data model after ' + moveCount + ' move(s):' + boardString);
-
-        //let moveCount = 0;
     }
 
 }
