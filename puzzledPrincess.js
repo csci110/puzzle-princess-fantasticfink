@@ -1,4 +1,4 @@
-// Adding a turn counter
+//It's not over until the program figures out that it's over - Part 3
 
 import { game, Sprite } from "./sgc/sgc.js";
 game.setBackground("floor.png");
@@ -22,7 +22,8 @@ class Marker extends Sprite {
         this.y = this.board.y + row * this.board.SquareSize + this.board.SquareSize / 2 - this.height / 2;
 
         // Updating Board Array
-        this.squareSymbol = this.name.substring(0,1);
+        this.board.dataModel[row][col] = this.squareSymbol;
+        //this.squareSymbol = this.name.substring(0,1);
         this.board.debugBoard();
 
         this.inBoard = true;
@@ -82,7 +83,27 @@ class PrincessMarker extends Marker {
 
 }
 
-class StrangerMarker extends Marker {}
+class StrangerMarker extends Marker {
+    constructor(board) {
+        super(board, "strangerFace.png", "Stranger");
+    }
+
+    handleGameLoop() {
+        if (this.inBoard) {
+            return;
+        }
+        // Mark a random empty square.
+        let row, col;
+        do {
+            row = Math.round(Math.random() * (this.board.size - 1));
+            col = Math.round(Math.random() * (this.board.size - 1));
+        } while (this.board.dataModel[row][col] !== this.board.emptySquareSymbol);
+        this.board.dataModel[row][col] = this.squareSymbol;
+        this.playInSquare(row, col);
+        this.board.takeTurns();
+    }
+}
+
 
 class TicTacToe extends Sprite {
     constructor() {
@@ -107,7 +128,77 @@ class TicTacToe extends Sprite {
     }
 
     takeTurns() {
-        this.activeMarker = new PrincessMarker(this);
+        if (this.gameIsWon()) {
+            let message = '        Game Over.\n        ';
+            if (this.activeMarker instanceof PrincessMarker) {
+                message = message + 'The Princess wins.';
+            }
+            else if (this.activeMarker instanceof StrangerMarker) {
+                message = message + 'The Stranger wins.';
+            }
+            game.end(message);
+            return;
+        }
+        if (this.gameIsDrawn()) {
+            game.end('        Game Over.\n        The game ends in a draw.');
+            return;
+        }
+
+        //this.activeMarker = new PrincessMarker(this);
+        if (!this.activeMarker) {
+            if (Math.random() < .5)
+                this.activeMarker = new PrincessMarker(this);
+            else this.activeMarker = new StrangerMarker(this);
+        }
+
+        else if (this.activeMarker instanceof PrincessMarker) {
+            // princess has moved; now it's stranger's turn
+            this.activeMarker = new StrangerMarker(this);
+        }
+        else if (this.activeMarker instanceof StrangerMarker) {
+            // stranger has moved; now it's princess's turn
+            this.activeMarker = new PrincessMarker(this);
+        }
+    }
+    
+    gameIsDrawn(){
+        if (this.dataModel[0][0] === this.emptySquareSymbol){
+            return false;
+        }
+        
+        if (this.dataModel[0][1] === this.emptySquareSymbol){
+            return false;
+        }
+        
+        if (this.dataModel[0][2] === this.emptySquareSymbol){
+            return false;
+        }
+        
+        if (this.dataModel[1][0] === this.emptySquareSymbol){
+            return false;
+        }
+        
+        if (this.dataModel[1][1] === this.emptySquareSymbol){
+            return false;
+        }
+        
+        if (this.dataModel[1][2] === this.emptySquareSymbol){
+            return false;
+        }
+        
+        if (this.dataModel[2][0] === this.emptySquareSymbol){
+            return false;
+        }
+        
+        if (this.dataModel[2][1] === this.emptySquareSymbol){
+            return false;
+        }
+        
+        if (this.dataModel[2][2] === this.emptySquareSymbol){
+            return false;
+        }
+        
+        return true;
     }
 
     debugBoard() {
@@ -116,8 +207,8 @@ class TicTacToe extends Sprite {
         for (let row = 0; row < this.size; row = row + 1) {
             for (let col = 0; col < this.size; col = col + 1) {
                 boardString = boardString + this.dataModel[row][col] + ' ';
-                if (this.dataModel[row][col] != this.emptySquareSymbol) {
-                    moveCount = moveCount + 1;
+                if (this.dataModel[row][col] !== this.emptySquareSymbol) {
+                    moveCount++;
                 }
             }
             boardString = boardString + '\n';
@@ -127,6 +218,66 @@ class TicTacToe extends Sprite {
         console.log('The data model after ' + moveCount + ' move(s):' + boardString);
     }
 
+    gameIsWon() {
+
+        // Are there three of the same markers diagonally from upper left?
+        if (this.dataModel[0][0] === this.dataModel[1][1] &&
+            this.dataModel[1][1] === this.dataModel[2][2] &&
+            this.dataModel[2][2] !== this.emptySquareSymbol) {
+            return true;
+        }
+
+        //Are there three of the same markers diagonally from upper right?
+        if (this.dataModel[0][2] === this.dataModel[1][1] &&
+            this.dataModel[1][1] === this.dataModel[2][0] &&
+            this.dataModel[2][0] !== this.emptySquareSymbol) {
+            return true;
+        }
+
+        //Win horizontally in first row?
+        if (this.dataModel[0][0] === this.dataModel[0][1] &&
+            this.dataModel[0][1] === this.dataModel[0][2] &&
+            this.dataModel[0][2] !== this.emptySquareSymbol) {
+            return true;
+        }
+
+        //Win horizontally in second row?
+        if (this.dataModel[1][0] === this.dataModel[1][1] &&
+            this.dataModel[1][1] === this.dataModel[1][2] &&
+            this.dataModel[1][2] !== this.emptySquareSymbol) {
+            return true;
+        }
+
+        //Win horizontally in third row?
+        if (this.dataModel[2][0] === this.dataModel[2][1] &&
+            this.dataModel[2][1] === this.dataModel[2][2] &&
+            this.dataModel[2][2] !== this.emptySquareSymbol) {
+            return true;
+        }
+
+        //Win vertically in first column?
+        if (this.dataModel[0][0] === this.dataModel[1][0] &&
+            this.dataModel[1][0] === this.dataModel[2][0] &&
+            this.dataModel[2][0] !== this.emptySquareSymbol) {
+            return true;
+        }
+
+        //Win vertically in second column?
+        if (this.dataModel[1][0] === this.dataModel[1][1] &&
+            this.dataModel[1][1] === this.dataModel[1][2] &&
+            this.dataModel[1][2] !== this.emptySquareSymbol) {
+            return true;
+        }
+
+        //Win vertically in third column?
+        if (this.dataModel[2][0] === this.dataModel[2][1] &&
+            this.dataModel[2][1] === this.dataModel[2][2] &&
+            this.dataModel[2][2] !== this.emptySquareSymbol) {
+            return true;
+        }
+
+        return false;
+    }
 }
 
 let theBoard = new TicTacToe();
