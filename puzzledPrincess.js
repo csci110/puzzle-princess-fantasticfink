@@ -1,4 +1,4 @@
-//It's not over until the program figures out that it's over - Part 3
+//Part 4
 
 import { game, Sprite } from "./sgc/sgc.js";
 game.setBackground("floor.png");
