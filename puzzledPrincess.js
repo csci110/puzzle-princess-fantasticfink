@@ -102,6 +102,79 @@ class StrangerMarker extends Marker {
         this.playInSquare(row, col);
         this.board.takeTurns();
     }
+
+    /*    
+    
+    let foundMove = this.findWinningMove();
+
+        if (!foundMove) {
+            foundMove = this.findWinningMove(true);
+        }
+        
+        if (!foundMove) {
+            foundMove = this.findForkingMove();
+        }
+        
+        if (!foundMove) {
+            foundMove = this.findForkingMove(true);
+        }
+        
+        if (!foundMove) {
+            foundMove = this.findCenterMove();
+        }
+        
+        if (!foundMove) {
+            foundMove = this.findOppositeCornerMove();
+        }
+        
+        if (!foundMove) {
+            foundMove = this.findAnyCornerMove();
+        }
+        
+        if (!foundMove) {
+            foundMove = this.findAnySideMove();
+        }
+        
+        if (!foundMove) {
+            foundMove = this.emptySquareSymbol;
+            foundMove = true;
+        }
+        
+        if (!foundMove) throw new Error('Failed to find a move.');
+        this.board.takeTurns();
+    } 
+    
+
+    findWinningMove(){
+        
+    }
+
+    findForkingMove(){
+        
+    }
+
+
+    findForkingMove(){
+        
+    }
+
+    findCenterMove(){
+        
+    }
+
+    findOppositeCornerMove(){
+        
+    }
+
+    findAnyCornerMove(){
+    
+    }
+
+    findAnySideMove(){
+        
+    }
+
+    */
 }
 
 
@@ -160,44 +233,44 @@ class TicTacToe extends Sprite {
             this.activeMarker = new PrincessMarker(this);
         }
     }
-    
-    gameIsDrawn(){
-        if (this.dataModel[0][0] === this.emptySquareSymbol){
+
+    gameIsDrawn() {
+        if (this.dataModel[0][0] === this.emptySquareSymbol) {
             return false;
         }
-        
-        if (this.dataModel[0][1] === this.emptySquareSymbol){
+
+        if (this.dataModel[0][1] === this.emptySquareSymbol) {
             return false;
         }
-        
-        if (this.dataModel[0][2] === this.emptySquareSymbol){
+
+        if (this.dataModel[0][2] === this.emptySquareSymbol) {
             return false;
         }
-        
-        if (this.dataModel[1][0] === this.emptySquareSymbol){
+
+        if (this.dataModel[1][0] === this.emptySquareSymbol) {
             return false;
         }
-        
-        if (this.dataModel[1][1] === this.emptySquareSymbol){
+
+        if (this.dataModel[1][1] === this.emptySquareSymbol) {
             return false;
         }
-        
-        if (this.dataModel[1][2] === this.emptySquareSymbol){
+
+        if (this.dataModel[1][2] === this.emptySquareSymbol) {
             return false;
         }
-        
-        if (this.dataModel[2][0] === this.emptySquareSymbol){
+
+        if (this.dataModel[2][0] === this.emptySquareSymbol) {
             return false;
         }
-        
-        if (this.dataModel[2][1] === this.emptySquareSymbol){
+
+        if (this.dataModel[2][1] === this.emptySquareSymbol) {
             return false;
         }
-        
-        if (this.dataModel[2][2] === this.emptySquareSymbol){
+
+        if (this.dataModel[2][2] === this.emptySquareSymbol) {
             return false;
         }
-        
+
         return true;
     }
 
