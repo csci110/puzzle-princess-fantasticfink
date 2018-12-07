@@ -1,4 +1,9 @@
-//Part 4
+
+
+/* I was able to get to part 4 on the tutorial.  
+The game works for the most part (aside from being unbeatable), 
+but there is a problem with the game counting vertical wins. */
+
 
 import { game, Sprite } from "./sgc/sgc.js";
 game.setBackground("floor.png");
